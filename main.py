@@ -11,12 +11,11 @@ from functools import wraps
 from werkzeug.security import generate_password_hash, check_password_hash
 from forms import CreatePostForm, RegisterForm, LoginForm, CommentForm
 import os
-from dotenv import load_dotenv
 
 load_dotenv()
 app = Flask(__name__)
 ckeditor = CKEditor(app)
-app.config['SECRET_KEY'] = os.getenv("FLASK_KEY")
+app.config['SECRET_KEY'] = os.environ.get("FLASK_KEY")
 Bootstrap5(app)
 
 login_manager = LoginManager()
@@ -36,7 +35,7 @@ class Base(DeclarativeBase):
     pass
 
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DB_URI")
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DB_URI")
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
 
